@@ -2,11 +2,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: Anprobe-Bühne links (3D-Figur auf Podest), Kleiderschrank-Panel rechts; auf dem Handy untereinander. */
+/* Layout: Anprobe-Bühne links (realistische 3D-Figur auf Podest), Kleiderschrank-Panel rechts; auf dem Handy untereinander. */
 :root {
   --bg: #e9ecf0;
-  --stage-a: #f6f7f9;
-  --stage-b: #dde1e7;
+  --stage-a: #f4f5f7;
+  --stage-b: #d9dde3;
   --panel: #fbfbfc;
   --ink: #16181d;
   --muted: #5b616c;
@@ -22,15 +22,15 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #111318; --stage-a: #1d2027; --stage-b: #101216; --panel: #16191e; --ink: #eceef2;
+    --bg: #111318; --stage-a: #23262d; --stage-b: #101216; --panel: #16191e; --ink: #eceef2;
     --muted: #9aa1ad; --line: #2a2f38; --chip: #20242b; --accent: #8396ff; --accent-ink: #0d1020;
-    --danger: #ff7b6e; --podium: #2b3039; color-scheme: dark;
+    --danger: #ff7b6e; --podium: #2e333c; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #111318; --stage-a: #1d2027; --stage-b: #101216; --panel: #16191e; --ink: #eceef2;
+  --bg: #111318; --stage-a: #23262d; --stage-b: #101216; --panel: #16191e; --ink: #eceef2;
   --muted: #9aa1ad; --line: #2a2f38; --chip: #20242b; --accent: #8396ff; --accent-ink: #0d1020;
-  --danger: #ff7b6e; --podium: #2b3039; color-scheme: dark;
+  --danger: #ff7b6e; --podium: #2e333c; color-scheme: dark;
 }
 [hidden] { display: none !important; }
 html, body { height: 100%; }
@@ -50,6 +50,10 @@ button, input, select { font: inherit; color: inherit; }
 .label-card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; font-size: 13px; }
 .label-card li span { color: var(--muted); }
 .hint { position: absolute; left: 16px; top: 16px; color: var(--muted); }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.loading div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; display: flex; gap: 10px; align-items: center; }
+.spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--line); border-top-color: var(--accent); animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .panel { overflow-y: auto; min-height: 0; border-left: 1px solid var(--line); background: var(--panel); padding: 22px 20px 28px; display: flex; flex-direction: column; gap: 18px; }
 .brand { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
@@ -71,7 +75,7 @@ section.tab { display: flex; flex-direction: column; gap: 18px; }
 .chip { flex: none; display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 5px 11px 5px 5px; cursor: pointer; white-space: nowrap; font-size: 13px; }
 .chip.none { padding-left: 11px; color: var(--muted); }
 .chip[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
-.sw { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); flex: none; }
+.sw { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); flex: none; background-size: 400%; background-position: center; }
 
 .btn { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 9px 14px; cursor: pointer; font-weight: 500; }
 .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
@@ -82,7 +86,7 @@ section.tab { display: flex; flex-direction: column; gap: 18px; }
 .cat-h { display: flex; justify-content: space-between; align-items: baseline; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
 .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .card { text-align: left; border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 0; cursor: pointer; overflow: hidden; display: flex; flex-direction: column; }
-.card .swatch { aspect-ratio: 16 / 9; max-width: 100%; position: relative; }
+.card .swatch { aspect-ratio: 16 / 9; max-width: 100%; position: relative; background-size: 300%; background-position: center; }
 .card .swatch .worn { position: absolute; top: 6px; left: 6px; background: var(--panel); color: var(--ink); border-radius: 4px; padding: 2px 6px; font-size: 10px; }
 .card .meta { padding: 8px 10px 10px; display: grid; gap: 2px; min-width: 0; }
 .card .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -96,6 +100,7 @@ section.tab { display: flex; flex-direction: column; gap: 18px; }
 .field input[type="text"], .field select { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 8px 10px; width: 100%; min-width: 0; }
 .colors { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .colors button { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(0,0,0,.18); cursor: pointer; padding: 0; }
+.colors button.orig { width: auto; border-radius: 999px; padding: 0 10px; background: var(--panel); font-size: 12px; }
 .colors button[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--ink); }
 .colors input[type="color"] { width: 40px; height: 28px; border: 1px solid var(--line); border-radius: 6px; padding: 0 2px; background: var(--panel); cursor: pointer; }
 
@@ -106,7 +111,7 @@ section.tab { display: flex; flex-direction: column; gap: 18px; }
 .range-h output { font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; }
 input[type="range"] { width: 100%; accent-color: var(--accent); }
 .scale { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; }
-.skins { display: flex; gap: 8px; flex-wrap: wrap; }
+.skins { display: flex; gap: 10px; flex-wrap: wrap; }
 .skins button { display: grid; justify-items: center; gap: 4px; border: 0; background: none; cursor: pointer; font-size: 11px; color: var(--muted); padding: 0; }
 .skins span.dot { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); }
 .skins button[aria-pressed="true"] span.dot { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--ink); }
@@ -117,11 +122,11 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 @media (max-width: 820px) {
   html, body { height: auto; }
   .app { grid-template-columns: minmax(0, 1fr); height: auto; }
-  .stage { height: 62svh; min-height: 380px; }
+  .stage { height: 64svh; min-height: 400px; }
   .panel { border-left: 0; border-top: 1px solid var(--line); overflow: visible; padding-left: 16px; padding-right: 16px; }
   .label-card, .hint { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 
 <div class="app">
@@ -131,8 +136,10 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
       <button class="tool" id="vFront" type="button">Vorne</button>
       <button class="tool" id="vSide" type="button">Seite</button>
       <button class="tool" id="vBack" type="button">Hinten</button>
+      <button class="tool" id="vFace" type="button">Nah</button>
       <button class="tool" id="vSpin" type="button" aria-pressed="false">Drehen</button>
     </div>
+    <div class="loading" id="loading"><div><span class="spin"></span><span id="loadingText">Figur wird geladen …</span></div></div>
     <div class="label-card" aria-live="polite">
       <span class="mono">Aktuelles Outfit</span>
       <ul id="outfitList"></ul>
@@ -158,7 +165,6 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
       <div id="slots" style="display:grid;gap:18px"></div>
       <div class="row">
         <button class="btn primary" id="shuffle" type="button">Zufällig kombinieren</button>
-        <button class="btn" id="undress" type="button">Alles ausziehen</button>
       </div>
     </section>
 
@@ -166,13 +172,12 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
       <div class="row"><button class="btn primary" id="newItem" type="button">+ Neues Teil</button></div>
       <form class="editor" id="editor" hidden>
         <h3 id="edTitle">Neues Teil</h3>
-        <div class="field"><label for="edName">Name</label><input type="text" id="edName" maxlength="40" placeholder="z. B. Graues Oversize-Shirt" required></div>
+        <div class="field"><label for="edName">Name</label><input type="text" id="edName" maxlength="40" placeholder="z. B. Schwarzes Basic-Shirt"></div>
         <div class="row" style="flex-wrap:nowrap">
           <div class="field" style="flex:1;min-width:0"><label for="edCat">Kategorie</label><select id="edCat"></select></div>
-          <div class="field" style="flex:1;min-width:0"><label for="edTpl">Schnitt</label><select id="edTpl"></select></div>
+          <div class="field" style="flex:1;min-width:0"><label for="edAsset">Schnitt</label><select id="edAsset"></select></div>
         </div>
         <div class="field"><span class="mono">Farbe</span><div class="colors" id="edColors"></div></div>
-        <div class="field"><label for="edPattern">Muster</label><select id="edPattern"></select></div>
         <div class="row">
           <button class="btn primary" type="submit">Speichern &amp; anziehen</button>
           <button class="btn" type="button" id="edCancel">Abbrechen</button>
@@ -191,15 +196,15 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
         <input type="range" id="height" min="150" max="205" step="1">
         <div class="scale"><span>150 cm</span><span>205 cm</span></div>
       </div>
-      <div class="field">
-        <div class="range-h"><label class="mono" for="build" style="color:var(--muted)">Statur</label><output id="buildOut">Normal</output></div>
-        <input type="range" id="build" min="0" max="100" step="1">
-        <div class="scale"><span>Schlank</span><span>Kräftig</span></div>
+      <div class="field"><span class="mono">Statur</span>
+        <div class="seg" id="build"><button type="button" data-v="slim">Schlank</button><button type="button" data-v="avg">Normal</button><button type="button" data-v="strong">Kräftig</button></div>
       </div>
       <div class="field"><span class="mono">Hautton</span><div class="skins" id="skins"></div></div>
+      <div class="field"><span class="mono">Frisur</span><div class="chips" id="hairs" style="flex-wrap:wrap"></div></div>
+      <div class="field"><span class="mono">Haarfarbe</span><div class="colors" id="hairColors"></div></div>
     </section>
 
-    <p class="foot-note">Gespeichert wird in diesem Browser. Als Nächstes: Kleidung per Foto hinzufügen und Vorschläge nach Anlass und Stil.</p>
+    <p class="foot-note">3D-Modelle: MakeHuman-Community (CC0). Gespeichert wird in diesem Browser. Als Nächstes: Kleidung per Foto hinzufügen und Vorschläge nach Anlass und Stil.</p>
   </aside>
 </div>
 
@@ -207,373 +212,55 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 const $ = s => document.querySelector(s);
-const TAU = Math.PI * 2;
-const KEY = 'fitgen-v1';
+const KEY = 'fitgen-v2';
+const A = 'assets/';
 
 /* ---------- Katalog ---------- */
-const CATS = {
-  top:    { label: 'Oberteil', templates: { tshirt: 'T-Shirt', longsleeve: 'Longsleeve', sweater: 'Pullover', hoodie: 'Hoodie', shirt: 'Hemd' } },
-  outer:  { label: 'Jacke', templates: { jacket: 'Jacke', coat: 'Mantel' } },
-  bottom: { label: 'Hose & Rock', templates: { jeans: 'Jeans', chino: 'Chino', jogger: 'Jogginghose', shorts: 'Shorts', skirt: 'Rock' } },
-  shoes:  { label: 'Schuhe', templates: { sneaker: 'Sneaker', boot: 'Boots', loafer: 'Loafer' } },
-};
-const SLOTS = ['outer', 'top', 'bottom', 'shoes'];
-const PATTERNS = { uni: 'Unifarben', streifen: 'Gestreift', karo: 'Kariert', denim: 'Denim' };
-const SKINS = [['Mannequin', '#c9ccd1'], ['Hell', '#efd3bd'], ['Mittel', '#d6a77f'], ['Oliv', '#b3825a'], ['Braun', '#7f5338'], ['Dunkel', '#4b3022']];
+const SLOTS = [['full', 'Komplett-Outfit'], ['top', 'Oberteil'], ['bottom', 'Hose & Rock'], ['shoes', 'Schuhe']];
+const CAT_LABEL = Object.fromEntries(SLOTS);
+const SKINS = [['caucasian', 'Hell', '#e6c3a8'], ['asian', 'Mittel', '#c99a72'], ['african', 'Dunkel', '#6b4430']];
+const HAIR_COLORS = [[null, 'Original'], ['#1f1813', 'Schwarz'], ['#3f2a1d', 'Dunkelbraun'], ['#7a5535', 'Hellbraun'], ['#c9a468', 'Blond'], ['#8a3b20', 'Rot'], ['#a6a6a6', 'Grau']];
 const SWATCHES = ['#f3f3ef', '#1d1e22', '#80858f', '#24324f', '#4f6f9e', '#bcd0ea', '#4d5e3c', '#cdb894', '#b08a5e', '#7a2e35', '#c8553d', '#e7c64c'];
-const EXAMPLES = [
-  { name: 'Weißes T-Shirt', cat: 'top', tpl: 'tshirt', color: '#f2f2ee', pattern: 'uni' },
-  { name: 'Schwarzer Hoodie', cat: 'top', tpl: 'hoodie', color: '#1f2024', pattern: 'uni' },
-  { name: 'Hemd hellblau', cat: 'top', tpl: 'shirt', color: '#bcd0ea', pattern: 'streifen' },
-  { name: 'Pullover Oliv', cat: 'top', tpl: 'sweater', color: '#5b6b45', pattern: 'uni' },
-  { name: 'Longsleeve Bordeaux', cat: 'top', tpl: 'longsleeve', color: '#6e2a33', pattern: 'uni' },
-  { name: 'Jeansjacke', cat: 'outer', tpl: 'jacket', color: '#5a7aa8', pattern: 'denim' },
-  { name: 'Mantel Kamel', cat: 'outer', tpl: 'coat', color: '#b08a5e', pattern: 'uni' },
-  { name: 'Blue Jeans', cat: 'bottom', tpl: 'jeans', color: '#34507e', pattern: 'denim' },
-  { name: 'Chino Beige', cat: 'bottom', tpl: 'chino', color: '#cdb894', pattern: 'uni' },
-  { name: 'Jogginghose Grau', cat: 'bottom', tpl: 'jogger', color: '#8c9099', pattern: 'uni' },
-  { name: 'Karo-Rock', cat: 'bottom', tpl: 'skirt', color: '#7a2e35', pattern: 'karo' },
-  { name: 'Weiße Sneaker', cat: 'shoes', tpl: 'sneaker', color: '#f5f5f2', pattern: 'uni' },
-  { name: 'Schwarze Boots', cat: 'shoes', tpl: 'boot', color: '#222226', pattern: 'uni' },
-  { name: 'Braune Loafer', cat: 'shoes', tpl: 'loafer', color: '#6b4129', pattern: 'uni' },
-];
+let M = null; // manifest
 
 /* ---------- Zustand ---------- */
 function defaults() {
   return {
-    body: { form: 'm', height: 180, build: 0.45, skin: 0 },
-    wardrobe: EXAMPLES.map((e, i) => ({ id: 'ex' + i, example: true, ...e })),
-    outfit: { top: 'ex0', outer: null, bottom: 'ex7', shoes: 'ex11' },
+    body: { form: 'm', height: 180, build: 'avg', skin: 'caucasian', hair: 'short02', hairColor: null },
+    wardrobe: [],
+    outfit: { full: null, top: null, bottom: null, shoes: null },
   };
 }
-function load() {
-  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.body && Array.isArray(s.wardrobe) && s.outfit) return s; } catch (e) {}
-  return null;
-}
+function load() { try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.body && Array.isArray(s.wardrobe) && s.outfit) return s; } catch (e) {} return null; }
 let state = load() || defaults();
 function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
 const itemById = id => state.wardrobe.find(i => i.id === id) || null;
 const worn = slot => itemById(state.outfit[slot]);
 
-/* ---------- Farben ---------- */
-function hexToRgb(h) { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
-function lum(h) { const [r, g, b] = hexToRgb(h); return (0.299 * r + 0.587 * g + 0.114 * b) / 255; }
-function mix(a, b, t) { const A = hexToRgb(a), B = hexToRgb(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); }
-function second(c) { return lum(c) > 0.55 ? mix(c, '#1b2440', 0.55) : mix(c, '#ffffff', 0.6); }
-function patternCss(c, p) {
-  const shade = lum(c) > 0.5 ? 'rgba(0,0,0,.22)' : 'rgba(255,255,255,.2)';
-  if (p === 'streifen') return `repeating-linear-gradient(0deg, ${second(c)} 0 3px, ${c} 3px 11px)`;
-  if (p === 'karo') return `repeating-linear-gradient(0deg, ${shade} 0 7px, transparent 7px 24px), repeating-linear-gradient(90deg, ${shade} 0 7px, transparent 7px 24px), ${c}`;
-  if (p === 'denim') return `repeating-linear-gradient(45deg, rgba(255,255,255,.1) 0 1px, transparent 1px 3px), ${c}`;
-  return c;
-}
-
-/* ---------- Texturen ---------- */
-const texCache = new Map();
-function patternTexture(c, p) {
-  const k = c + p; if (texCache.has(k)) return texCache.get(k);
-  const cv = document.createElement('canvas'); cv.width = cv.height = 256; const x = cv.getContext('2d');
-  x.fillStyle = c; x.fillRect(0, 0, 256, 256);
-  if (p === 'streifen') { x.fillStyle = second(c); for (let i = 0; i < 8; i++) x.fillRect(0, i * 32, 256, 9); }
-  if (p === 'karo') {
-    const sh = lum(c) > 0.5 ? 'rgba(0,0,0,.25)' : 'rgba(255,255,255,.18)';
-    x.fillStyle = sh; [0, 128].forEach(o => { x.fillRect(0, o, 256, 40); x.fillRect(o, 0, 40, 256); });
-    x.fillStyle = lum(c) > 0.5 ? 'rgba(0,0,0,.35)' : 'rgba(255,240,200,.35)';
-    [84, 212].forEach(o => { x.fillRect(0, o, 256, 3); x.fillRect(o, 0, 3, 256); });
-  }
-  if (p === 'denim') {
-    const img = x.getImageData(0, 0, 256, 256), d = img.data;
-    for (let i = 0; i < d.length; i += 4) { const n = (Math.random() - 0.5) * 34; d[i] += n; d[i + 1] += n; d[i + 2] += n; }
-    x.putImageData(img, 0, 0);
-    x.strokeStyle = 'rgba(255,255,255,.10)'; x.lineWidth = 1;
-    for (let i = -256; i < 256; i += 4) { x.beginPath(); x.moveTo(i, 256); x.lineTo(i + 256, 0); x.stroke(); }
-  }
-  const t = new THREE.CanvasTexture(cv);
-  t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 4;
-  texCache.set(k, t); return t;
-}
-function clothMat(item, darken = 1) {
-  const uni = item.pattern === 'uni' || !item.pattern;
-  const m = new THREE.MeshStandardMaterial({
-    color: uni ? item.color : '#ffffff', map: uni ? null : patternTexture(item.color, item.pattern),
-    roughness: item.pattern === 'denim' ? 0.95 : 0.84, metalness: 0, side: THREE.DoubleSide,
-  });
-  if (darken !== 1) m.color.multiplyScalar(darken);
-  return m;
-}
-const plain = (c, r = 0.7, extra = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: r, metalness: 0, ...extra });
-
-/* ---------- Geometrie ---------- */
-const UVK = 6; // Musterwiederholungen pro Meter
-function catmull(p0, p1, p2, p3, t) { const t2 = t * t, t3 = t2 * t; return 0.5 * ((2 * p1) + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 + (-p0 + 3 * p1 - 3 * p2 + p3) * t3); }
-// keys: [y, rx, rFront, rBack], aufsteigend in y
-function makeProfile(keys, per = 10) {
-  const out = [];
-  for (let i = 0; i < keys.length - 1; i++) {
-    const k0 = keys[Math.max(0, i - 1)], k1 = keys[i], k2 = keys[i + 1], k3 = keys[Math.min(keys.length - 1, i + 2)];
-    for (let s = 0; s < per; s++) { const t = s / per; out.push([0, 1, 2, 3].map(c => catmull(k0[c], k1[c], k2[c], k3[c], t))); }
-  }
-  out.push(keys[keys.length - 1].slice());
-  for (let i = 0; i < out.length; i++) {
-    for (let c = 1; c < 4; c++) out[i][c] = Math.max(0, out[i][c]);
-    if (i && out[i][0] <= out[i - 1][0]) out[i][0] = out[i - 1][0] + 1e-5;
-  }
-  return {
-    pts: out,
-    at(y) {
-      if (y <= out[0][0]) return out[0].slice(1);
-      if (y >= out[out.length - 1][0]) return out[out.length - 1].slice(1);
-      let lo = 0, hi = out.length - 1;
-      while (hi - lo > 1) { const m = (lo + hi) >> 1; if (out[m][0] <= y) lo = m; else hi = m; }
-      const a = out[lo], b = out[hi], t = (y - a[0]) / (b[0] - a[0]);
-      return [1, 2, 3].map(c => a[c] + (b[c] - a[c]) * t);
-    },
-  };
-}
-const scaleKeys = (keys, sy, sr) => keys.map(([y, a, b, c]) => [y * sy, a * sr, b * sr, c * sr]);
-
-// rows: [y, rx, rf, rb] aufsteigend; phi = 0 zeigt nach vorne (+z)
-function ringGeo(rows, { seg = 56, phiStart = Math.PI, phiLength = TAU, uR = 0.17 } = {}) {
-  const n = rows.length, pos = [], uv = [], idx = [];
-  for (let i = 0; i <= seg; i++) {
-    const a = phiLength * i / seg, phi = phiStart + a, sn = Math.sin(phi), cs = Math.cos(phi);
-    for (let j = 0; j < n; j++) {
-      const [y, rx, rf, rb] = rows[j];
-      pos.push(rx * sn, y, (cs > 0 ? rf : rb) * cs);
-      uv.push(a * uR * UVK, y * UVK);
-    }
-  }
-  for (let i = 0; i < seg; i++) for (let j = 0; j < n - 1; j++) {
-    const a = j + i * n, b = a + n, c = a + n + 1, d = a + 1;
-    idx.push(a, b, d, c, d, b);
-  }
-  const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-  g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
-  g.setIndex(idx); g.computeVertexNormals();
-  return g;
-}
-function mesh(geo, mat, parent) { const m = new THREE.Mesh(geo, mat); m.castShadow = true; m.receiveShadow = true; if (parent) parent.add(m); return m; }
-
-/* ---------- Körper ---------- */
-const TORSO = {
-  m: [[0.80, 0, 0, 0], [0.81, 0.09, 0.06, 0.07], [0.84, 0.15, 0.10, 0.11], [0.92, 0.17, 0.105, 0.125], [1.00, 0.16, 0.10, 0.10], [1.08, 0.152, 0.10, 0.095],
-      [1.20, 0.166, 0.112, 0.10], [1.30, 0.178, 0.12, 0.105], [1.38, 0.19, 0.105, 0.10], [1.43, 0.183, 0.085, 0.085], [1.47, 0.12, 0.07, 0.07], [1.50, 0.065, 0.052, 0.052], [1.53, 0.05, 0.046, 0.046]],
-  f: [[0.80, 0, 0, 0], [0.81, 0.09, 0.06, 0.07], [0.84, 0.16, 0.10, 0.12], [0.92, 0.19, 0.11, 0.14], [1.00, 0.17, 0.10, 0.11], [1.08, 0.133, 0.09, 0.085],
-      [1.18, 0.145, 0.10, 0.09], [1.26, 0.16, 0.135, 0.095], [1.33, 0.165, 0.112, 0.095], [1.40, 0.172, 0.09, 0.09], [1.44, 0.163, 0.075, 0.075], [1.47, 0.11, 0.062, 0.062], [1.50, 0.058, 0.046, 0.046], [1.53, 0.046, 0.042, 0.042]],
-};
-const ARM = [[-0.71, 0, 0, 0], [-0.69, 0.012, 0.02, 0.02], [-0.62, 0.016, 0.034, 0.034], [-0.55, 0.018, 0.03, 0.03], [-0.51, 0.022, 0.027, 0.027], [-0.36, 0.04, 0.037, 0.037],
-             [-0.28, 0.035, 0.034, 0.034], [-0.08, 0.047, 0.045, 0.045], [0, 0.05, 0.048, 0.048], [0.035, 0.035, 0.035, 0.035], [0.05, 0, 0, 0]];
-const LEG = [[-0.81, 0, 0, 0], [-0.79, 0.03, 0.03, 0.03], [-0.75, 0.032, 0.03, 0.03], [-0.62, 0.044, 0.04, 0.045], [-0.49, 0.054, 0.05, 0.06], [-0.39, 0.051, 0.05, 0.05],
-             [-0.30, 0.064, 0.064, 0.064], [-0.15, 0.08, 0.08, 0.082], [-0.02, 0.085, 0.085, 0.09], [0.02, 0.06, 0.06, 0.06], [0.04, 0, 0, 0]];
-
-function dims(b) {
-  const s = b.height / 180, w = 0.86 + 0.32 * b.build, f = b.form === 'f';
-  const torso = makeProfile(scaleKeys(TORSO[b.form], s, s * w), 12);
-  const arm = makeProfile(scaleKeys(ARM, s, s * w * (f ? 0.9 : 1)), 8);
-  const leg = makeProfile(scaleKeys(LEG, s, s * w * (f ? 1.05 : 1)), 8);
-  return {
-    s, w, f, torso, arm, leg,
-    chestY: (f ? 1.27 : 1.30) * s, chest: torso.at((f ? 1.27 : 1.30) * s), hip: torso.at(0.92 * s),
-    shY: 1.415 * s, shX: torso.at(1.40 * s)[0] * 0.9,
-    hipY: 0.86 * s, hipX: (f ? 0.092 : 0.086) * s * w,
-    foot: -0.83 * s,
-  };
-}
-// eine Zeile des Rumpfs, optional mit Weite (drape), Zugabe d und ausgestelltem Saum
-function torsoRow(D, y, d, dr = 0, flare = 0) {
-  let [rx, rf, rb] = D.torso.at(y);
-  if (dr && y < D.chestY) { rx = Math.max(rx, dr * D.chest[0]); rf = Math.max(rf, dr * D.chest[1]); rb = Math.max(rb, dr * D.chest[2]); }
-  if (flare && y < 0.92 * D.s) {
-    const k = (0.92 * D.s - y) * flare;
-    rx = Math.max(rx, D.hip[0] + k); rf = Math.max(rf, D.hip[1] + k * 0.8); rb = Math.max(rb, D.hip[2] + k * 0.8);
-  }
-  return [y, rx + d, rf + d, rb + d];
-}
-function torsoRows(D, y0, y1, d, dr = 0, flare = 0) {
-  const rows = [], a = y0 * D.s, b = y1 * D.s, n = Math.max(4, Math.ceil((b - a) / (0.008 * D.s)));
-  for (let i = 0; i <= n; i++) rows.push(torsoRow(D, a + (b - a) * i / n, d, dr, flare));
-  return rows;
-}
-function limbRows(P, y0, y1, d, minR = 0) { // lokale y (bereits skaliert)
-  const rows = [], n = Math.max(4, Math.ceil((y1 - y0) / 0.008));
-  for (let i = 0; i <= n; i++) {
-    const y = y0 + (y1 - y0) * i / n; const [rx, rf, rb] = P.at(y);
-    // Mindestweite erst unterhalb der Schulterkugel, sonst entstehen eckige Schulterpolster
-    const k = Math.min(1, Math.max(0, (-y - 0.005) / 0.06)), mr = minR * k;
-    rows.push([y, Math.max(rx, mr) + d, Math.max(rf, mr) + d, Math.max(rb, mr) + d]);
-  }
-  return rows;
-}
-
-function buildFigure(D, skin, armOut) {
-  const s = D.s, root = new THREE.Group();
-  const skinM = plain(skin, D.skinIsMannequin ? 0.45 : 0.62);
-  mesh(ringGeo(D.torso.pts.map(p => p.slice())), skinM, root);
-  const neckR = 0.05 * s * Math.sqrt(D.w);
-  const neck = mesh(new THREE.CylinderGeometry(neckR * 0.92, neckR, 0.17 * s, 24), skinM, root); neck.position.y = 1.545 * s;
-  const head = mesh(new THREE.SphereGeometry(0.105 * s, 40, 28), skinM, root); head.position.y = 1.70 * s; head.scale.set(0.84, 1.05, 0.95);
-  const nose = mesh(new THREE.SphereGeometry(0.014 * s, 12, 10), skinM, root); nose.position.set(0, 1.675 * s, 0.094 * s); nose.scale.set(0.7, 1.3, 0.9);
-  const arms = [], legs = [];
-  for (const side of [1, -1]) {
-    const a = new THREE.Group(); a.position.set(side * D.shX, D.shY, 0); a.rotation.z = side * armOut; a.rotation.x = 0.04; root.add(a);
-    mesh(ringGeo(D.arm.pts.map(p => p.slice()), { seg: 32, uR: 0.05 }), skinM, a); arms.push(a);
-    const l = new THREE.Group(); l.position.set(side * D.hipX, D.hipY, 0); l.rotation.z = side * 0.025; root.add(l);
-    mesh(ringGeo(D.leg.pts.map(p => p.slice()), { seg: 32, uR: 0.06 }), skinM, l);
-    const foot = mesh(new THREE.CapsuleGeometry(0.04 * s, 0.15 * s, 8, 16), skinM, l);
-    foot.rotation.x = Math.PI / 2; foot.scale.set(0.82, 1, 0.62); foot.position.set(0, D.foot, 0.04 * s); legs.push(l);
-  }
-  return { root, arms, legs };
-}
-
-/* ---------- Kleidung ---------- */
-const TOPS = {
-  tshirt:     { y0: 0.87, d: 0.012, dr: 0.93, sl: -0.17, sd: 0.013, smin: 0.05, rib: true },
-  longsleeve: { y0: 0.86, d: 0.011, dr: 0.92, sl: -0.505, sd: 0.011, smin: 0.045, cuff: true, rib: true },
-  sweater:    { y0: 0.85, d: 0.02, dr: 0.96, sl: -0.505, sd: 0.018, smin: 0.05, cuff: true, hem: true, rib: true },
-  hoodie:     { y0: 0.84, d: 0.024, dr: 0.97, sl: -0.51, sd: 0.021, smin: 0.052, cuff: true, hem: true, hood: true, pocket: true },
-  shirt:      { y0: 0.84, d: 0.012, dr: 0.94, sl: -0.50, sd: 0.012, smin: 0.048, cuff: true, collar: true, buttons: true },
-};
-const OUTERS = {
-  jacket: { y0: 0.86, d: 0.036, dr: 0.99, gap: 0.09, sl: -0.515, sd: 0.026, smin: 0.045, hem: true, zip: true },
-  coat:   { y0: 0.50, d: 0.042, dr: 1.0, gap: 0.12, flare: 0.14, sl: -0.515, sd: 0.029, smin: 0.046, buttons: true },
-};
-const BOTTOMS = {
-  jeans:  { waist: 1.02, d: 0.011, end: -0.785, minR: 0.058, button: true },
-  chino:  { waist: 1.03, d: 0.011, end: -0.775, minR: 0.052, belt: true },
-  jogger: { waist: 1.05, d: 0.02, end: -0.755, minR: 0.05, cuff: true, string: true },
-  shorts: { waist: 1.02, d: 0.02, end: -0.30, minR: 0.078, hem: true },
-  skirt:  { waist: 1.03, d: 0.014, skirt: 0.60, flare: 0.22 },
-};
-
-function sleeves(D, fig, c, m, cuffM) {
-  const s = D.s;
-  for (const a of fig.arms) {
-    mesh(ringGeo(limbRows(D.arm, c.sl * s, 0.05 * s, c.sd, c.smin * s * D.w), { seg: 32, uR: 0.06 }), m, a);
-    if (c.cuff) mesh(ringGeo(limbRows(D.arm, c.sl * s, (c.sl + 0.045) * s, c.sd + 0.005, c.smin * s * D.w * 0.8), { seg: 32, uR: 0.06 }), cuffM, a);
-  }
-}
-function buildTop(D, fig, it) {
-  const c = TOPS[it.tpl]; if (!c) return; const s = D.s, m = clothMat(it), rib = clothMat(it, 0.9);
-  mesh(ringGeo(torsoRows(D, c.y0, 1.49, c.d, c.dr)), m, fig.root);
-  sleeves(D, fig, c, m, rib);
-  if (c.hem) mesh(ringGeo(torsoRows(D, c.y0, c.y0 + 0.05, c.d + 0.006, c.dr)), rib, fig.root);
-  if (c.rib) mesh(ringGeo(torsoRows(D, 1.468, 1.505, c.d + 0.006)), rib, fig.root);
-  if (c.pocket) mesh(ringGeo(torsoRows(D, 0.9, 1.05, c.d + 0.008, c.dr), { phiStart: -0.75, phiLength: 1.5, seg: 20 }), m, fig.root);
-  if (c.hood) {
-    const r0 = D.torso.at(1.49 * s);
-    const hood = mesh(new THREE.TorusGeometry(0.085 * s, 0.038 * s, 14, 40), m, fig.root);
-    hood.position.set(0, 1.5 * s, -0.025 * s); hood.rotation.x = Math.PI / 2 + 0.45; hood.scale.set(1.15 * (r0[0] / (0.065 * s)) ** 0.3, 1.1, 1);
-    const front = torsoRow(D, 1.40 * s, c.d, c.dr)[2];
-    for (const x of [-0.035, 0.035]) {
-      const st = mesh(new THREE.CylinderGeometry(0.0035 * s, 0.0035 * s, 0.13 * s, 6), plain('#f1f1ee', 0.8), fig.root);
-      st.position.set(x * s, 1.39 * s, front + 0.006);
-    }
-  }
-  if (c.collar) {
-    const nr = 0.05 * s * Math.sqrt(D.w);
-    const col = mesh(new THREE.CylinderGeometry(nr + 0.012, nr + 0.026, 0.055 * s, 32, 1, true, 0.22, TAU - 0.44), m, fig.root);
-    col.position.y = 1.505 * s;
-  }
-  if (c.buttons) {
-    const bm = plain(lum(it.color) > 0.5 ? '#f7f7f4' : '#d9d6cf', 0.4);
-    for (let y = 0.9; y < 1.44; y += 0.085) {
-      const r = torsoRow(D, y * s, c.d, c.dr);
-      const b = mesh(new THREE.SphereGeometry(0.0055 * s, 10, 8), bm, fig.root); b.position.set(0, y * s, r[2] + 0.002); b.scale.z = 0.5;
-    }
-  }
-}
-function buildOuter(D, fig, it) {
-  const c = OUTERS[it.tpl]; if (!c) return; const s = D.s, m = clothMat(it), rib = clothMat(it, 0.88);
-  const phi = { phiStart: c.gap, phiLength: TAU - 2 * c.gap };
-  mesh(ringGeo(torsoRows(D, c.y0, 1.505, c.d, c.dr, c.flare || 0), phi), m, fig.root);
-  sleeves(D, fig, { ...c, cuff: true }, m, rib);
-  if (c.hem) mesh(ringGeo(torsoRows(D, c.y0, c.y0 + 0.05, c.d + 0.006, c.dr), phi), rib, fig.root);
-  const nr = 0.05 * s * Math.sqrt(D.w);
-  const col = mesh(new THREE.CylinderGeometry(nr + 0.03, nr + 0.05, (it.tpl === 'coat' ? 0.08 : 0.06) * s, 40, 1, true, c.gap + 0.1, TAU - 2 * c.gap - 0.2), rib, fig.root);
-  col.position.y = 1.515 * s;
-  const edge = side => {
-    const pts = [];
-    for (let y = c.y0 + 0.01; y <= 1.47; y += 0.03) {
-      const [, rx, rf] = torsoRow(D, y * s, c.d + 0.002, c.dr, c.flare || 0);
-      pts.push(new THREE.Vector3(side * rx * Math.sin(c.gap), y * s, rf * Math.cos(c.gap)));
-    }
-    return new THREE.CatmullRomCurve3(pts);
-  };
-  if (c.zip) {
-    const zm = plain('#9a9ca3', 0.35, { metalness: 0.6 });
-    for (const side of [1, -1]) mesh(new THREE.TubeGeometry(edge(side), 60, 0.004 * s, 6), zm, fig.root);
-  }
-  if (c.buttons) {
-    const bm = plain(mix(it.color, '#000000', 0.55), 0.4);
-    for (let y = 0.95; y < 1.32; y += 0.12) {
-      const [, rx, rf] = torsoRow(D, y * s, c.d, c.dr, c.flare);
-      const b = mesh(new THREE.CylinderGeometry(0.011 * s, 0.011 * s, 0.006 * s, 16), bm, fig.root);
-      const p = c.gap + 0.12; b.position.set(-rx * Math.sin(p), y * s, rf * Math.cos(p) + 0.003); b.rotation.x = Math.PI / 2;
-    }
-  }
-}
-function buildBottom(D, fig, it) {
-  const c = BOTTOMS[it.tpl]; if (!c) return; const s = D.s, m = clothMat(it), band = clothMat(it, 0.85);
-  if (c.skirt) {
-    mesh(ringGeo(torsoRows(D, c.skirt, c.waist, c.d, 0, c.flare)), m, fig.root);
-    mesh(ringGeo(torsoRows(D, c.waist - 0.035, c.waist, c.d + 0.005)), band, fig.root);
-    return;
-  }
-  mesh(ringGeo(torsoRows(D, 0.80, c.waist, c.d)), m, fig.root);
-  mesh(ringGeo(torsoRows(D, c.waist - 0.035, c.waist, c.d + 0.005)), c.belt ? plain('#3a2a20', 0.5) : band, fig.root);
-  for (const l of fig.legs) {
-    mesh(ringGeo(limbRows(D.leg, c.end * s, 0.04 * s, c.d, c.minR * s * D.w), { seg: 36, uR: 0.07 }), m, l);
-    if (c.cuff) mesh(ringGeo(limbRows(D.leg, c.end * s, (c.end + 0.045) * s, c.d + 0.006, c.minR * s * D.w * 0.7), { seg: 36 }), band, l);
-    if (c.hem) mesh(ringGeo(limbRows(D.leg, c.end * s, (c.end + 0.025) * s, c.d + 0.005, c.minR * s * D.w), { seg: 36 }), band, l);
-  }
-  const front = torsoRow(D, (c.waist - 0.018) * s, c.d + 0.005)[2];
-  if (c.button) { const b = mesh(new THREE.CylinderGeometry(0.009 * s, 0.009 * s, 0.006 * s, 16), plain('#b7955a', 0.3, { metalness: 0.7 }), fig.root); b.rotation.x = Math.PI / 2; b.position.set(0, (c.waist - 0.018) * s, front + 0.002); }
-  if (c.belt) { const b = mesh(new THREE.BoxGeometry(0.045 * s, 0.032 * s, 0.008 * s), plain('#a9a9ad', 0.3, { metalness: 0.8 }), fig.root); b.position.set(0, (c.waist - 0.018) * s, front + 0.003); }
-  if (c.string) for (const x of [-0.02, 0.02]) {
-    const st = mesh(new THREE.CylinderGeometry(0.003 * s, 0.003 * s, 0.09 * s, 6), plain('#eeeeea', 0.8), fig.root);
-    st.position.set(x * s, (c.waist - 0.06) * s, torsoRow(D, (c.waist - 0.06) * s, c.d)[2] + 0.004);
-  }
-}
-function buildShoes(D, fig, it) {
-  const s = D.s, f = D.foot, z = 0.045 * s, up = plain(it.color, it.tpl === 'loafer' ? 0.45 : 0.7);
-  const cap = (r, len, sx, sz, mat, l, y, zz = z) => { const m = mesh(new THREE.CapsuleGeometry(r * s, len * s, 8, 20), mat, l); m.rotation.x = Math.PI / 2; m.scale.set(sx, 1, sz); m.position.set(0, y, zz); return m; };
-  for (const l of fig.legs) {
-    if (it.tpl === 'sneaker') {
-      cap(0.047, 0.15, 0.9, 0.78, up, l, f + 0.01 * s);
-      cap(0.052, 0.165, 0.94, 0.32, plain(lum(it.color) > 0.8 ? '#dcdcd6' : '#f3f2ed', 0.8), l, f - 0.022 * s);
-      const t = mesh(new THREE.BoxGeometry(0.036 * s, 0.01 * s, 0.075 * s), plain(second(it.color), 0.8), l); t.position.set(0, f + 0.042 * s, 0.075 * s); t.rotation.x = -0.32;
-    } else if (it.tpl === 'boot') {
-      cap(0.05, 0.15, 0.9, 0.8, up, l, f + 0.012 * s);
-      const sh = mesh(new THREE.CylinderGeometry(0.047 * s, 0.05 * s, 0.17 * s, 28), up, l); sh.position.set(0, f + 0.1 * s, 0.004 * s);
-      cap(0.054, 0.165, 0.95, 0.36, plain('#2a2522', 0.8), l, f - 0.024 * s);
-    } else {
-      cap(0.045, 0.15, 0.86, 0.6, up, l, f + 0.0 * s);
-      cap(0.05, 0.16, 0.92, 0.22, plain(mix(it.color, '#000000', 0.6), 0.6), l, f - 0.024 * s);
-      const st = mesh(new THREE.BoxGeometry(0.07 * s, 0.008 * s, 0.018 * s), plain(mix(it.color, '#000000', 0.3), 0.5), l); st.position.set(0, f + 0.026 * s, 0.085 * s);
-    }
-  }
-}
-
 /* ---------- Szene ---------- */
 const stage = $('#stage');
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: false });
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.95;
 stage.prepend(renderer.domElement);
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(28, 1, 0.05, 30);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+const camera = new THREE.PerspectiveCamera(26, 1, 0.05, 30);
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true; controls.enablePan = false; controls.minDistance = 1.2; controls.maxDistance = 7;
-controls.maxPolarAngle = Math.PI * 0.53; controls.autoRotateSpeed = 1.6;
-
-scene.add(new THREE.HemisphereLight(0xffffff, 0x8a90a0, 1.25));
-const key = new THREE.DirectionalLight(0xffffff, 1.7); key.position.set(1.6, 3.2, 2.4); key.castShadow = true;
-key.shadow.mapSize.set(2048, 2048); Object.assign(key.shadow.camera, { left: -1.2, right: 1.2, top: 2.4, bottom: -0.2, near: 0.5, far: 8 }); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.02;
-scene.add(key);
-const rim = new THREE.DirectionalLight(0xdfe6ff, 0.7); rim.position.set(-2, 2.2, -2.5); scene.add(rim);
+controls.enableDamping = true; controls.enablePan = false; controls.minDistance = 0.6; controls.maxDistance = 7;
+controls.maxPolarAngle = Math.PI * 0.53; controls.autoRotateSpeed = 1.4;
+const key = new THREE.DirectionalLight(0xfff2e4, 1.6); key.position.set(1.5, 3.2, 2.4); key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048); Object.assign(key.shadow.camera, { left: -1.2, right: 1.2, top: 2.4, bottom: -0.2, near: 0.5, far: 8 });
+key.shadow.bias = -0.0003; key.shadow.normalBias = 0.02; scene.add(key);
+const rim = new THREE.DirectionalLight(0xdfe7ff, 0.9); rim.position.set(-2, 2.4, -2.5); scene.add(rim);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8a90a0, 0.25));
 const podiumMat = new THREE.MeshStandardMaterial({ color: '#c9ced6', roughness: 0.9 });
 const podium = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.64, 0.04, 72), podiumMat); podium.position.y = -0.02; podium.receiveShadow = true; scene.add(podium);
 function syncTheme() { const v = getComputedStyle(document.documentElement).getPropertyValue('--podium').trim(); if (v) podiumMat.color.set(v); }
@@ -581,49 +268,127 @@ syncTheme();
 try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncTheme); } catch (e) {}
 new MutationObserver(syncTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-let figureGroup = null;
+function resize() { const r = stage.getBoundingClientRect(); if (!r.width || !r.height) return; renderer.setSize(r.width, r.height, false); camera.aspect = r.width / r.height; camera.updateProjectionMatrix(); }
+new ResizeObserver(resize).observe(stage); resize();
+(function loop() { controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); })();
+
+/* ---------- Laden ---------- */
+const draco = new DRACOLoader(); draco.setDecoderPath(A + 'draco/'); draco.setDecoderConfig({ type: 'js' });
+const gltfLoader = new GLTFLoader(); gltfLoader.setDRACOLoader(draco);
+const texLoader = new THREE.TextureLoader();
+const variants = new Map(); // key -> {group, meshes, baseH}
+const texCache = new Map();
+function loadTex(path, srgb = true) {
+  const k = path + srgb; if (texCache.has(k)) return texCache.get(k);
+  const p = new Promise((res, rej) => texLoader.load(A + path, t => { t.flipY = false; t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace; t.anisotropy = 8; res(t); }, undefined, rej));
+  texCache.set(k, p); return p;
+}
+// Graustufen-Version einer Textur zum Umfärben (Struktur bleibt, Farbe kommt aus material.color)
+const grayCache = new Map();
+async function grayTex(path) {
+  if (grayCache.has(path)) return grayCache.get(path);
+  const p = loadTex(path).then(t => {
+    const img = t.image, c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+    const x = c.getContext('2d'); x.drawImage(img, 0, 0); const d = x.getImageData(0, 0, c.width, c.height), a = d.data;
+    let sum = 0, n = 0;
+    for (let i = 0; i < a.length; i += 4) { if (a[i + 3] < 10) continue; sum += 0.299 * a[i] + 0.587 * a[i + 1] + 0.114 * a[i + 2]; n++; }
+    const k = 215 / Math.max(1, sum / Math.max(1, n));
+    for (let i = 0; i < a.length; i += 4) { const l = Math.min(255, (0.299 * a[i] + 0.587 * a[i + 1] + 0.114 * a[i + 2]) * k); a[i] = a[i + 1] = a[i + 2] = l; }
+    x.putImageData(d, 0, 0);
+    const g = new THREE.CanvasTexture(c); g.flipY = false; g.colorSpace = THREE.SRGBColorSpace; g.anisotropy = 8; return g;
+  });
+  grayCache.set(path, p); return p;
+}
+const variantKey = () => state.body.form + '_' + state.body.build;
+async function getVariant(k) {
+  if (variants.has(k)) return variants.get(k);
+  const b64 = (await (await fetch(A + M.variants[k])).json()).b64;
+  const bin = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  const gltf = await gltfLoader.parseAsync(bin.buffer, A);
+  const group = gltf.scene, meshes = {};
+  group.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; o.visible = false; meshes[(o.name || o.parent?.name || '').replace(/^fg_/, '')] = o; } });
+  group.traverse(o => { if (!o.isMesh && o.name && o.name.startsWith('fg_') && o.children[0]?.isMesh) meshes[o.name.slice(3)] = o.children[0]; });
+  const box = new THREE.Box3().setFromObject(meshes.body); const baseH = box.max.y;
+  const v = { group, meshes, baseH }; variants.set(k, v); return v;
+}
+
+/* Materialien */
+const matCache = new Map();
+function skinTexPath() { return M.skins[`young_${state.body.skin}_${state.body.form === 'f' ? 'female' : 'male'}`]; }
+async function bodyMaterial() {
+  const map = await loadTex(skinTexPath());
+  const m = new THREE.MeshPhysicalMaterial({ map, roughness: 0.55, sheen: 0.25, sheenRoughness: 0.6, sheenColor: new THREE.Color('#ffc2a8') });
+  return m;
+}
+async function assetMaterial(name, tint) {
+  const a = M.assets[name]; const k = name + '|' + (tint || '');
+  if (matCache.has(k)) return matCache.get(k);
+  const p = (async () => {
+    const map = a.map ? (tint ? await grayTex(a.map) : await loadTex(a.map)) : null;
+    const normal = a.normal ? await loadTex(a.normal, false) : null;
+    const hair = a.cat === 'hair' || a.cat === 'eyebrows' || a.cat === 'eyelashes';
+    const m = new THREE.MeshStandardMaterial({
+      map, normalMap: normal, color: tint || '#ffffff', roughness: hair ? 0.6 : (a.cat === 'shoes' ? 0.55 : 0.85), metalness: 0,
+      side: THREE.DoubleSide, alphaTest: a.alpha ? (a.cat === 'hair' ? 0.3 : a.cat === 'eyebrows' ? 0.15 : 0.45) : 0,
+      transparent: a.cat === 'eyebrows', depthWrite: a.cat !== 'eyebrows',
+      polygonOffset: !hair, polygonOffsetFactor: -2, polygonOffsetUnits: -4,
+    });
+    if (normal) m.normalScale.set(0.8, -0.8);
+    return m;
+  })();
+  matCache.set(k, p); return p;
+}
+
+/* ---------- Figur aktualisieren ---------- */
+let current = null, applySeq = 0;
+function setLoading(t) { $('#loading').hidden = !t; if (t) $('#loadingText').textContent = t; }
+async function apply() {
+  const seq = ++applySeq;
+  const k = variantKey();
+  if (!variants.has(k)) setLoading('Figur wird geladen …');
+  let v;
+  try { v = await getVariant(k); } catch (e) { setLoading('Figur konnte nicht geladen werden. Bitte Seite neu laden.'); console.error(e); return; }
+  if (seq !== applySeq) return;
+  const wear = new Map(); // assetName -> tint
+  wear.set('eyes', null); wear.set('eyebrow001', null); wear.set('eyelashes01', null);
+  if (state.body.hair) wear.set(state.body.hair, state.body.hairColor);
+  const full = worn('full');
+  for (const [slot] of SLOTS) { const it = worn(slot); if (!it) continue; if (full && (slot === 'top' || slot === 'bottom')) continue; wear.set(it.asset, it.tint); }
+  const mats = await Promise.all([...wear].map(([n, t]) => assetMaterial(n, t).then(m => [n, m])));
+  const bm = await bodyMaterial();
+  if (seq !== applySeq) return;
+  for (const [n, mesh] of Object.entries(v.meshes)) {
+    if (n === 'body') continue;
+    mesh.visible = wear.has(n);
+  }
+  for (const [n, m] of mats) if (v.meshes[n]) v.meshes[n].material = m;
+  const old = v.meshes.body.material; v.meshes.body.material = bm; if (old && old.dispose && old !== bm) old.dispose();
+  v.meshes.body.visible = true;
+  const s = (state.body.height / 100) / v.baseH; v.group.scale.setScalar(s);
+  if (current !== v) { if (current) scene.remove(current.group); scene.add(v.group); current = v; }
+  setLoading(null); frame(false);
+}
+let framed = false;
 function frame(reset) {
   const h = state.body.height / 100;
   controls.target.set(0, h * 0.53, 0);
-  if (reset) { camera.position.set(0, h * 0.6, h * 2.45 + 0.6); }
+  if (reset || !framed) { camera.position.set(0, h * 0.6, h * 2.45 + 0.6); framed = true; }
   controls.update();
 }
-function rebuild() {
-  if (figureGroup) {
-    scene.remove(figureGroup);
-    figureGroup.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); });
-  }
-  const b = state.body, D = dims(b); D.skinIsMannequin = b.skin === 0;
-  const outer = worn('outer'), top = worn('top');
-  const armOut = 0.1 + b.build * 0.05 + (outer ? 0.05 : 0) + (top && (top.tpl === 'hoodie' || top.tpl === 'sweater') ? 0.02 : 0);
-  const fig = buildFigure(D, SKINS[b.skin]?.[1] || SKINS[0][1], armOut);
-  const bottom = worn('bottom'), shoes = worn('shoes');
-  if (bottom) buildBottom(D, fig, bottom);
-  if (top) buildTop(D, fig, top);
-  if (outer) buildOuter(D, fig, outer);
-  if (shoes) buildShoes(D, fig, shoes);
-  figureGroup = fig.root; scene.add(figureGroup);
-}
-function resize() {
-  const r = stage.getBoundingClientRect(); if (!r.width || !r.height) return;
-  renderer.setSize(r.width, r.height, false); camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
-}
-new ResizeObserver(resize).observe(stage);
-resize(); rebuild(); frame(true);
-(function loop() { controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); })();
-renderer.domElement.addEventListener('pointerdown', () => { $('#hint').hidden = true; }, { once: true });
-
-function viewAt(angle) {
+function viewAt(angle, close) {
   controls.autoRotate = false; $('#vSpin').setAttribute('aria-pressed', 'false');
-  const t = controls.target, d = camera.position.distanceTo(t), h = state.body.height / 100;
-  const elev = h * 0.08, flat = Math.sqrt(Math.max(0.01, d * d - elev * elev));
-  camera.position.set(t.x + Math.sin(angle) * flat, t.y + elev, t.z + Math.cos(angle) * flat);
+  const h = state.body.height / 100;
+  if (close) controls.target.set(0, h * 0.9, 0); else controls.target.set(0, h * 0.53, 0);
+  const d = close ? 0.95 : h * 2.45 + 0.6;
+  camera.position.set(Math.sin(angle) * d, controls.target.y + (close ? 0.02 : h * 0.07), Math.cos(angle) * d);
   controls.update();
 }
 $('#vFront').onclick = () => viewAt(0);
 $('#vSide').onclick = () => viewAt(Math.PI / 2);
 $('#vBack').onclick = () => viewAt(Math.PI);
+$('#vFace').onclick = () => viewAt(0.35, true);
 $('#vSpin').onclick = e => { controls.autoRotate = !controls.autoRotate; e.currentTarget.setAttribute('aria-pressed', String(controls.autoRotate)); };
+renderer.domElement.addEventListener('pointerdown', () => { $('#hint').hidden = true; }, { once: true });
 
 /* ---------- UI ---------- */
 function el(tag, attrs = {}, ...kids) {
@@ -635,85 +400,87 @@ function el(tag, attrs = {}, ...kids) {
   for (const c of kids.flat()) if (c !== null && c !== undefined && c !== false) n.append(c.nodeType ? c : document.createTextNode(c));
   return n;
 }
-function swatch(item, cls = 'sw') { const s = el('span', { class: cls }); s.style.background = patternCss(item.color, item.pattern); return s; }
-const tplLabel = it => CATS[it.cat]?.templates[it.tpl] || it.tpl;
-
-function wear(slot, id) { state.outfit[slot] = id; save(); rebuild(); renderAll(); }
-
+const assetLabel = n => M.assets[n]?.label || n;
+function swatch(item, cls = 'sw') {
+  const s = el('span', { class: cls });
+  if (item.tint) s.style.background = item.tint;
+  else { const a = M.assets[item.asset]; if (a?.map) s.style.backgroundImage = `url("${A + a.map}")`; }
+  return s;
+}
+function wear(slot, id) {
+  state.outfit[slot] = id;
+  if (id && slot === 'full') { state.outfit.top = null; state.outfit.bottom = null; }
+  if (id && (slot === 'top' || slot === 'bottom')) state.outfit.full = null;
+  save(); apply(); renderAll();
+}
 function renderSlots() {
   const box = $('#slots'); box.replaceChildren();
-  for (const slot of SLOTS) {
+  for (const [slot, label] of SLOTS) {
     const items = state.wardrobe.filter(i => i.cat === slot), cur = worn(slot);
-    const chips = el('div', { class: 'chips', role: 'group', 'aria-label': CATS[slot].label },
+    const chips = el('div', { class: 'chips', role: 'group', 'aria-label': label },
       el('button', { class: 'chip none', type: 'button', 'aria-pressed': String(!cur), onclick: () => wear(slot, null) }, 'Ohne'),
       items.map(i => el('button', { class: 'chip', type: 'button', 'aria-pressed': String(cur?.id === i.id), onclick: () => wear(slot, i.id) }, swatch(i), i.name)));
-    box.append(el('div', { class: 'slot' },
-      el('div', { class: 'slot-h' }, el('span', { class: 'mono' }, CATS[slot].label), el('span', { class: 'cur' }, cur ? cur.name : '–')), chips));
+    box.append(el('div', { class: 'slot' }, el('div', { class: 'slot-h' }, el('span', { class: 'mono' }, label), el('span', { class: 'cur' }, cur ? cur.name : '–')), chips));
   }
 }
 function renderLabel() {
   const ul = $('#outfitList'); ul.replaceChildren();
-  const parts = SLOTS.map(s => worn(s)).filter(Boolean);
+  const parts = SLOTS.map(([s]) => worn(s)).filter(Boolean);
   if (!parts.length) ul.append(el('li', {}, 'Nichts an'));
-  for (const p of parts) ul.append(el('li', {}, p.name + ' ', el('span', {}, '· ' + tplLabel(p))));
+  for (const p of parts) ul.append(el('li', {}, p.name + ' ', el('span', {}, '· ' + assetLabel(p.asset))));
 }
-let editing = null; // id oder 'new'
+let editing = null;
 function renderWardrobe() {
   const box = $('#wardrobe'); box.replaceChildren();
-  for (const cat of Object.keys(CATS)) {
+  for (const [cat, label] of SLOTS) {
     const items = state.wardrobe.filter(i => i.cat === cat);
     const grid = el('div', { class: 'grid' }, items.map(i => {
-      const isWorn = state.outfit[cat] === i.id;
-      const sw = swatch(i, 'swatch'); if (isWorn) sw.append(el('span', { class: 'worn mono' }, 'Trägt'));
+      const sw = swatch(i, 'swatch'); if (state.outfit[cat] === i.id) sw.append(el('span', { class: 'worn mono' }, 'Trägt'));
       return el('button', { class: 'card', type: 'button', 'aria-current': String(editing === i.id), onclick: () => openEditor(i.id) }, sw,
-        el('span', { class: 'meta' }, el('span', { class: 'name' }, i.name),
-          el('span', { class: 'mono' }, tplLabel(i) + ' · ' + PATTERNS[i.pattern], i.example ? el('span', { class: 'badge' }, 'Beispiel') : null)));
+        el('span', { class: 'meta' }, el('span', { class: 'name' }, i.name), el('span', { class: 'mono' }, assetLabel(i.asset) + (i.tint ? ' · umgefärbt' : ''), i.example ? el('span', { class: 'badge' }, 'Beispiel') : null)));
     }));
-    box.append(el('div', { style: 'display:grid;gap:10px' }, el('div', { class: 'cat-h' }, el('span', { class: 'mono' }, CATS[cat].label), el('span', { class: 'mono' }, String(items.length))),
+    box.append(el('div', { style: 'display:grid;gap:10px' }, el('div', { class: 'cat-h' }, el('span', { class: 'mono' }, label), el('span', { class: 'mono' }, String(items.length))),
       items.length ? grid : el('p', { style: 'margin:0;color:var(--muted)' }, 'Noch nichts in dieser Kategorie.')));
   }
 }
 
 /* Editor */
-const ed = { cat: 'top', tpl: 'tshirt', color: SWATCHES[0], pattern: 'uni' };
-$('#edCat').append(...Object.entries(CATS).map(([k, v]) => el('option', { value: k }, v.label)));
-$('#edPattern').append(...Object.entries(PATTERNS).map(([k, v]) => el('option', { value: k }, v)));
-function fillTpl() { const s = $('#edTpl'); s.replaceChildren(...Object.entries(CATS[ed.cat].templates).map(([k, v]) => el('option', { value: k }, v))); if (!CATS[ed.cat].templates[ed.tpl]) ed.tpl = Object.keys(CATS[ed.cat].templates)[0]; s.value = ed.tpl; }
-function renderColors() {
-  const box = $('#edColors'); box.replaceChildren();
-  for (const c of SWATCHES) box.append(el('button', { type: 'button', 'aria-label': 'Farbe ' + c, 'aria-pressed': String(c === ed.color), style: 'background:' + c, onclick: () => { ed.color = c; renderColors(); } }));
-  const inp = el('input', { type: 'color', id: 'edColor', value: ed.color, 'aria-label': 'Eigene Farbe' });
-  inp.addEventListener('input', e => { ed.color = e.target.value; box.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', 'false')); });
+const ed = { cat: 'top', asset: null, tint: null };
+function assetsOf(cat) { return Object.entries(M.assets).filter(([, a]) => a.cat === cat).map(([n]) => n); }
+function fillAssets() { const list = assetsOf(ed.cat); if (!list.includes(ed.asset)) ed.asset = list[0]; $('#edAsset').replaceChildren(...list.map(n => el('option', { value: n }, assetLabel(n)))); $('#edAsset').value = ed.asset; }
+function renderColors(box, cur, set, origLabel = 'Original') {
+  box.replaceChildren();
+  box.append(el('button', { type: 'button', class: 'orig', 'aria-pressed': String(!cur), onclick: () => set(null) }, origLabel));
+  for (const c of SWATCHES) box.append(el('button', { type: 'button', 'aria-label': 'Farbe ' + c, 'aria-pressed': String(c === cur), style: 'background:' + c, onclick: () => set(c) }));
+  const inp = el('input', { type: 'color', value: cur || '#808080', 'aria-label': 'Eigene Farbe' });
+  inp.addEventListener('change', e => set(e.target.value));
   box.append(inp);
 }
+function edColors() { renderColors($('#edColors'), ed.tint, c => { ed.tint = c; edColors(); }); }
 function openEditor(id) {
   editing = id; const it = id === 'new' ? null : itemById(id);
-  Object.assign(ed, it ? { cat: it.cat, tpl: it.tpl, color: it.color, pattern: it.pattern } : { cat: 'top', tpl: 'tshirt', color: SWATCHES[0], pattern: 'uni' });
+  Object.assign(ed, it ? { cat: it.cat, asset: it.asset, tint: it.tint } : { cat: 'top', asset: null, tint: null });
   $('#edTitle').textContent = it ? 'Teil bearbeiten' : 'Neues Teil';
   $('#edName').value = it ? it.name : '';
-  $('#edCat').value = ed.cat; fillTpl(); $('#edPattern').value = ed.pattern; renderColors();
+  $('#edCat').value = ed.cat; fillAssets(); edColors();
   $('#edDelete').hidden = !it; disarm();
   $('#editor').hidden = false; renderWardrobe();
-  $('#editor').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); $('#edName').focus({ preventScroll: true });
+  $('#editor').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 function closeEditor() { editing = null; $('#editor').hidden = true; renderWardrobe(); }
-$('#edCat').onchange = e => { ed.cat = e.target.value; fillTpl(); };
-$('#edTpl').onchange = e => { ed.tpl = e.target.value; };
-$('#edPattern').onchange = e => { ed.pattern = e.target.value; };
+$('#edCat').onchange = e => { ed.cat = e.target.value; fillAssets(); };
+$('#edAsset').onchange = e => { ed.asset = e.target.value; };
 $('#newItem').onclick = () => openEditor('new');
 $('#edCancel').onclick = closeEditor;
 $('#editor').addEventListener('submit', e => {
   e.preventDefault();
-  const name = $('#edName').value.trim() || (CATS[ed.cat].templates[ed.tpl]);
+  const name = $('#edName').value.trim() || assetLabel(ed.asset);
   let it = editing !== 'new' ? itemById(editing) : null;
   if (it) {
     if (it.cat !== ed.cat && state.outfit[it.cat] === it.id) state.outfit[it.cat] = null;
-    Object.assign(it, { name, cat: ed.cat, tpl: ed.tpl, color: ed.color, pattern: ed.pattern, example: false });
-  } else {
-    it = { id: 'i' + Date.now().toString(36), name, cat: ed.cat, tpl: ed.tpl, color: ed.color, pattern: ed.pattern };
-    state.wardrobe.push(it);
-  }
-  state.outfit[it.cat] = it.id; save(); rebuild(); editing = null; $('#editor').hidden = true; renderAll();
+    Object.assign(it, { name, cat: ed.cat, asset: ed.asset, tint: ed.tint, example: false });
+  } else { it = { id: 'i' + Date.now().toString(36), name, cat: ed.cat, asset: ed.asset, tint: ed.tint }; state.wardrobe.push(it); }
+  editing = null; $('#editor').hidden = true; wear(it.cat, it.id);
 });
 let armTimer;
 function disarm() { const b = $('#edDelete'); b.classList.remove('armed'); b.textContent = 'Löschen'; clearTimeout(armTimer); }
@@ -723,7 +490,7 @@ $('#edDelete').onclick = e => {
   const it = itemById(editing); if (!it) return;
   state.wardrobe = state.wardrobe.filter(i => i.id !== it.id);
   if (state.outfit[it.cat] === it.id) state.outfit[it.cat] = null;
-  save(); rebuild(); closeEditor(); renderAll();
+  save(); closeEditor(); apply(); renderAll();
 };
 
 /* Körper */
@@ -731,41 +498,55 @@ const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 function renderBody() {
   const b = state.body;
   document.querySelectorAll('#form button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.v === b.form)));
+  document.querySelectorAll('#build button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.v === b.build)));
   $('#height').value = b.height; $('#heightOut').textContent = b.height + ' cm';
-  $('#build').value = Math.round(b.build * 100);
-  $('#buildOut').textContent = b.build < 0.25 ? 'Schlank' : b.build < 0.62 ? 'Normal' : b.build < 0.85 ? 'Sportlich-breit' : 'Kräftig';
-  const box = $('#skins'); box.replaceChildren(...SKINS.map(([n, c], i) => el('button', { type: 'button', 'aria-pressed': String(i === b.skin), onclick: () => { b.skin = i; save(); rebuild(); renderBody(); } }, el('span', { class: 'dot', style: 'background:' + c }), n)));
-  const idx = Math.max(0, Math.min(5, Math.round((b.height - 165) / 12 + b.build * 2.5 + (b.form === 'f' ? -0.6 : 0))));
+  $('#skins').replaceChildren(...SKINS.map(([k, n, c]) => el('button', { type: 'button', 'aria-pressed': String(k === b.skin), onclick: () => { b.skin = k; save(); apply(); renderBody(); } }, el('span', { class: 'dot', style: 'background:' + c }), n)));
+  const hairs = assetsOf('hair');
+  $('#hairs').replaceChildren(el('button', { class: 'chip none', type: 'button', 'aria-pressed': String(!b.hair), onclick: () => { b.hair = null; save(); apply(); renderBody(); } }, 'Keine'),
+    ...hairs.map(h => el('button', { class: 'chip none', type: 'button', 'aria-pressed': String(b.hair === h), onclick: () => { b.hair = h; save(); apply(); renderBody(); } }, assetLabel(h))));
+  const hc = $('#hairColors'); hc.replaceChildren(...HAIR_COLORS.map(([c, n]) => c ? el('button', { type: 'button', 'aria-label': n, title: n, 'aria-pressed': String(b.hairColor === c), style: 'background:' + c, onclick: () => { b.hairColor = c; save(); apply(); renderBody(); } })
+    : el('button', { type: 'button', class: 'orig', 'aria-pressed': String(!b.hairColor), onclick: () => { b.hairColor = null; save(); apply(); renderBody(); } }, n)));
+  const bi = { slim: 0.1, avg: 0.45, strong: 0.85 }[b.build];
+  const idx = Math.max(0, Math.min(5, Math.round((b.height - 165) / 12 + bi * 2.5 + (b.form === 'f' ? -0.6 : 0))));
   $('#sizeLetter').textContent = sizes[idx];
-  $('#sizeEu').textContent = 'EU ' + (b.form === 'f' ? 32 + idx * 2 + 2 : 44 + idx * 2 + 2);
+  $('#sizeEu').textContent = 'EU ' + (b.form === 'f' ? 34 + idx * 2 : 46 + idx * 2);
 }
 document.querySelectorAll('#form button').forEach(x => x.onclick = () => {
   const b = state.body; if (b.form === x.dataset.v) return;
-  b.form = x.dataset.v; if (b.form === 'f' && b.height === 180) b.height = 168; else if (b.form === 'm' && b.height === 168) b.height = 180;
-  save(); rebuild(); frame(false); renderBody();
+  b.form = x.dataset.v;
+  if (b.form === 'f' && b.height === 180) b.height = 168; else if (b.form === 'm' && b.height === 168) b.height = 180;
+  if (b.form === 'f' && (b.hair === 'short02' || b.hair === 'short04')) b.hair = 'long01';
+  else if (b.form === 'm' && (b.hair === 'long01' || b.hair === 'ponytail01' || b.hair === 'bob02')) b.hair = 'short02';
+  save(); apply(); renderBody();
 });
-let raf = 0;
-const live = fn => e => { fn(e); renderBody(); cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { rebuild(); frame(false); }); };
-$('#height').addEventListener('input', live(e => { state.body.height = +e.target.value; }));
-$('#build').addEventListener('input', live(e => { state.body.build = +e.target.value / 100; }));
-['#height', '#build'].forEach(s => $(s).addEventListener('change', save));
+document.querySelectorAll('#build button').forEach(x => x.onclick = () => { state.body.build = x.dataset.v; save(); apply(); renderBody(); });
+$('#height').addEventListener('input', e => { state.body.height = +e.target.value; renderBody(); if (current) { current.group.scale.setScalar((state.body.height / 100) / current.baseH); frame(false); } });
+$('#height').addEventListener('change', save);
 
 /* Tabs */
 const tabs = ['outfit', 'schrank', 'koerper'];
-function showTab(t) {
-  tabs.forEach(x => { $('#t-' + x).setAttribute('aria-selected', String(x === t)); $('#tab-' + x).hidden = x !== t; });
-  try { localStorage.setItem(KEY + '-tab', t); } catch (e) {}
-}
+function showTab(t) { tabs.forEach(x => { $('#t-' + x).setAttribute('aria-selected', String(x === t)); $('#tab-' + x).hidden = x !== t; }); try { localStorage.setItem(KEY + '-tab', t); } catch (e) {} }
 tabs.forEach(t => $('#t-' + t).onclick = () => showTab(t));
 try { const t = localStorage.getItem(KEY + '-tab'); if (tabs.includes(t)) showTab(t); } catch (e) {}
 
 $('#shuffle').onclick = () => {
   const pick = c => { const a = state.wardrobe.filter(i => i.cat === c); return a.length ? a[Math.floor(Math.random() * a.length)].id : null; };
-  state.outfit = { top: pick('top'), outer: Math.random() < 0.45 ? pick('outer') : null, bottom: pick('bottom'), shoes: pick('shoes') };
-  save(); rebuild(); renderAll();
+  if (Math.random() < 0.3) state.outfit = { full: pick('full'), top: null, bottom: null, shoes: pick('shoes') };
+  else state.outfit = { full: null, top: pick('top'), bottom: pick('bottom'), shoes: pick('shoes') };
+  save(); apply(); renderAll();
 };
-$('#undress').onclick = () => { state.outfit = { top: null, outer: null, bottom: null, shoes: null }; save(); rebuild(); renderAll(); };
-
 function renderAll() { renderSlots(); renderLabel(); renderWardrobe(); renderBody(); }
-renderAll();
+
+/* ---------- Start ---------- */
+(async () => {
+  try { M = await (await fetch(A + 'manifest.json')).json(); }
+  catch (e) { setLoading('Daten konnten nicht geladen werden. Bitte Seite neu laden.'); return; }
+  $('#edCat').append(...SLOTS.map(([k, v]) => el('option', { value: k }, v)));
+  if (!state.wardrobe.length) {
+    state.wardrobe = Object.entries(M.assets).filter(([, a]) => CAT_LABEL[a.cat]).map(([n, a]) => ({ id: 'ex_' + n, name: a.label, cat: a.cat, asset: n, tint: null, example: true }));
+    state.outfit = { full: null, top: 'ex_elvs_crude_t-shirt_male', bottom: 'ex_toigo_wool_pants', shoes: 'ex_shoes02' };
+    save();
+  }
+  renderAll(); frame(true); apply();
+})();
 </script>

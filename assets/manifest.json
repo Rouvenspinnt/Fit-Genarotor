@@ -1,0 +1,358 @@
+{
+ "assets": {
+  "elvs_crude_t-shirt_male": {
+   "cat": "top",
+   "alpha": false,
+   "map": "tex/elvs_crude_t-shirt_male.jpg",
+   "label": "T-Shirt"
+  },
+  "joepal_crude_t-shirt_female": {
+   "cat": "top",
+   "alpha": false,
+   "map": "tex/joepal_crude_t-shirt_female.jpg",
+   "label": "T-Shirt tailliert"
+  },
+  "toigo_basic_tucked_t-shirt": {
+   "cat": "top",
+   "alpha": false,
+   "map": "tex/toigo_basic_tucked_t-shirt.jpg",
+   "label": "Crop-Shirt"
+  },
+  "namuhekam_male_polo_shirt": {
+   "cat": "top",
+   "alpha": false,
+   "map": "tex/namuhekam_male_polo_shirt.jpg",
+   "label": "Poloshirt"
+  },
+  "toigo_fisherman_sweater": {
+   "cat": "top",
+   "alpha": false,
+   "map": "tex/toigo_fisherman_sweater.jpg",
+   "label": "Strickpullover"
+  },
+  "toigo_camisole_top": {
+   "cat": "top",
+   "alpha": true,
+   "map": "tex/toigo_camisole_top.png",
+   "label": "Camisole-Top"
+  },
+  "toigo_keyhole_tank_top": {
+   "cat": "top",
+   "alpha": false,
+   "map": "tex/toigo_keyhole_tank_top.jpg",
+   "label": "Tanktop"
+  },
+  "toigo_turtleneck_halter_top": {
+   "cat": "top",
+   "alpha": false,
+   "map": "tex/toigo_turtleneck_halter_top.jpg",
+   "label": "Rollkragen-Top"
+  },
+  "cortu_cargo_pants": {
+   "cat": "bottom",
+   "alpha": true,
+   "map": "tex/cortu_cargo_pants.png",
+   "normal": "tex/cortu_cargo_pants_n.jpg",
+   "label": "Cargohose"
+  },
+  "toigo_wool_pants": {
+   "cat": "bottom",
+   "alpha": false,
+   "map": "tex/toigo_wool_pants.jpg",
+   "label": "Stoffhose"
+  },
+  "cortu_jeans_shorts": {
+   "cat": "bottom",
+   "alpha": true,
+   "map": "tex/cortu_jeans_shorts.png",
+   "normal": "tex/cortu_jeans_shorts_n.jpg",
+   "label": "Jeansshorts"
+  },
+  "toigo_harem_pants": {
+   "cat": "bottom",
+   "alpha": false,
+   "map": "tex/toigo_harem_pants.jpg",
+   "label": "Haremshose"
+  },
+  "frankyaye_mini_skirt_01": {
+   "cat": "bottom",
+   "alpha": true,
+   "map": "tex/frankyaye_mini_skirt_01.png",
+   "label": "Minirock"
+  },
+  "toigo_long_full_skirt": {
+   "cat": "bottom",
+   "alpha": false,
+   "map": "tex/toigo_long_full_skirt.jpg",
+   "label": "Langer Rock"
+  },
+  "toigo_tiered_mini_skirt": {
+   "cat": "bottom",
+   "alpha": false,
+   "map": "tex/toigo_tiered_mini_skirt.jpg",
+   "normal": "tex/toigo_tiered_mini_skirt_n.jpg",
+   "label": "Leder-Stufenrock"
+  },
+  "toigo_skirt_with_lace_ruffle": {
+   "cat": "bottom",
+   "alpha": true,
+   "map": "tex/toigo_skirt_with_lace_ruffle.png",
+   "label": "Rock mit Spitze"
+  },
+  "shoes01": {
+   "cat": "shoes",
+   "alpha": false,
+   "map": "tex/shoes01.jpg",
+   "normal": "tex/shoes01_n.jpg",
+   "label": "Schn\u00fcrschuhe"
+  },
+  "shoes02": {
+   "cat": "shoes",
+   "alpha": false,
+   "map": "tex/shoes02.jpg",
+   "label": "Sneaker"
+  },
+  "shoes03": {
+   "cat": "shoes",
+   "alpha": false,
+   "map": "tex/shoes03.jpg",
+   "label": "Halbschuhe"
+  },
+  "shoes04": {
+   "cat": "shoes",
+   "alpha": false,
+   "map": "tex/shoes04.jpg",
+   "normal": "tex/shoes04_n.jpg",
+   "label": "Turnschuhe"
+  },
+  "shoes05": {
+   "cat": "shoes",
+   "alpha": false,
+   "map": "tex/shoes05.jpg",
+   "label": "Pumps"
+  },
+  "shoes06": {
+   "cat": "shoes",
+   "alpha": false,
+   "map": "tex/shoes06.jpg",
+   "label": "Stiefeletten"
+  },
+  "toigo_ankle_boots_male": {
+   "cat": "shoes",
+   "alpha": false,
+   "map": "tex/toigo_ankle_boots_male.jpg",
+   "normal": "tex/toigo_ankle_boots_male_n.jpg",
+   "label": "Chelsea Boots"
+  },
+  "toigo_ankle_boots_female": {
+   "cat": "shoes",
+   "alpha": false,
+   "map": "tex/toigo_ankle_boots_female.jpg",
+   "normal": "tex/toigo_ankle_boots_female_n.jpg",
+   "label": "Ankle Boots"
+  },
+  "culturalibre_male_boots": {
+   "cat": "shoes",
+   "alpha": true,
+   "map": "tex/culturalibre_male_boots.png",
+   "label": "Stiefel"
+  },
+  "toigo_ballet_flats": {
+   "cat": "shoes",
+   "alpha": false,
+   "map": "tex/toigo_ballet_flats.jpg",
+   "normal": "tex/toigo_ballet_flats_n.jpg",
+   "label": "Ballerinas"
+  },
+  "toigo_mj_cloth_shoes": {
+   "cat": "shoes",
+   "alpha": false,
+   "map": "tex/toigo_mj_cloth_shoes.jpg",
+   "normal": "tex/toigo_mj_cloth_shoes_n.jpg",
+   "label": "Stoffschuhe"
+  },
+  "toigo_flats": {
+   "cat": "shoes",
+   "alpha": false,
+   "map": "tex/toigo_flats.jpg",
+   "label": "Slipper"
+  },
+  "male_casualsuit01": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/male_casualsuit01.jpg",
+   "normal": "tex/male_casualsuit01_n.jpg",
+   "label": "Casual-Look 1"
+  },
+  "male_casualsuit02": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/male_casualsuit02.jpg",
+   "normal": "tex/male_casualsuit02_n.jpg",
+   "label": "Casual-Look 2"
+  },
+  "male_casualsuit03": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/male_casualsuit03.jpg",
+   "normal": "tex/male_casualsuit03_n.jpg",
+   "label": "Casual-Look 3"
+  },
+  "male_casualsuit04": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/male_casualsuit04.jpg",
+   "normal": "tex/male_casualsuit04_n.jpg",
+   "label": "Casual-Look 4"
+  },
+  "male_casualsuit05": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/male_casualsuit05.jpg",
+   "normal": "tex/male_casualsuit05_n.jpg",
+   "label": "Casual-Look 5"
+  },
+  "male_casualsuit06": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/male_casualsuit06.jpg",
+   "normal": "tex/male_casualsuit06_n.jpg",
+   "label": "Casual-Look 6"
+  },
+  "male_worksuit01": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/male_worksuit01.jpg",
+   "normal": "tex/male_worksuit01_n.jpg",
+   "label": "Arbeitskleidung"
+  },
+  "male_elegantsuit01": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/male_elegantsuit01.jpg",
+   "label": "Elegant (Herren)"
+  },
+  "toigo_male_suit_3": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/toigo_male_suit_3.jpg",
+   "normal": "tex/toigo_male_suit_3_n.jpg",
+   "label": "Anzug"
+  },
+  "toigo_suit_with_dinner_jacket": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/toigo_suit_with_dinner_jacket.jpg",
+   "normal": "tex/toigo_suit_with_dinner_jacket_n.jpg",
+   "label": "Dinner-Jackett"
+  },
+  "female_casualsuit01": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/female_casualsuit01.jpg",
+   "normal": "tex/female_casualsuit01_n.jpg",
+   "label": "Casual-Look Damen 1"
+  },
+  "female_casualsuit02": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/female_casualsuit02.jpg",
+   "normal": "tex/female_casualsuit02_n.jpg",
+   "label": "Casual-Look Damen 2"
+  },
+  "female_sportsuit01": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/female_sportsuit01.jpg",
+   "normal": "tex/female_sportsuit01_n.jpg",
+   "label": "Sport-Outfit"
+  },
+  "female_elegantsuit01": {
+   "cat": "full",
+   "alpha": false,
+   "map": "tex/female_elegantsuit01.jpg",
+   "normal": "tex/female_elegantsuit01_n.jpg",
+   "label": "Elegant (Damen)"
+  },
+  "toigo_female_suit": {
+   "cat": "full",
+   "alpha": true,
+   "map": "tex/toigo_female_suit.png",
+   "label": "Kost\u00fcm"
+  },
+  "short02": {
+   "cat": "hair",
+   "alpha": true,
+   "map": "tex/short02.png",
+   "label": "Kurz"
+  },
+  "short04": {
+   "cat": "hair",
+   "alpha": true,
+   "map": "tex/short04.png",
+   "label": "Kurz gestylt"
+  },
+  "bob02": {
+   "cat": "hair",
+   "alpha": true,
+   "map": "tex/bob02.png",
+   "label": "Bob"
+  },
+  "ponytail01": {
+   "cat": "hair",
+   "alpha": true,
+   "map": "tex/ponytail01.png",
+   "label": "Pferdeschwanz"
+  },
+  "long01": {
+   "cat": "hair",
+   "alpha": true,
+   "map": "tex/long01.png",
+   "label": "Lang"
+  },
+  "afro01": {
+   "cat": "hair",
+   "alpha": true,
+   "map": "tex/afro01.png",
+   "label": "Afro"
+  },
+  "braid01": {
+   "cat": "hair",
+   "alpha": true,
+   "map": "tex/braid01.png",
+   "label": "Zopf"
+  },
+  "eyebrow001": {
+   "cat": "eyebrows",
+   "alpha": true,
+   "map": "tex/eyebrow001.png"
+  },
+  "eyelashes01": {
+   "cat": "eyelashes",
+   "alpha": true,
+   "map": "tex/eyelashes01.png"
+  },
+  "eyes": {
+   "cat": "eyes",
+   "alpha": true,
+   "map": "tex/eyes.png"
+  }
+ },
+ "skins": {
+  "young_caucasian_male": "tex/skin_young_caucasian_male.jpg",
+  "young_caucasian_female": "tex/skin_young_caucasian_female.jpg",
+  "young_african_male": "tex/skin_young_african_male.jpg",
+  "young_african_female": "tex/skin_young_african_female.jpg",
+  "young_asian_male": "tex/skin_young_asian_male.jpg",
+  "young_asian_female": "tex/skin_young_asian_female.jpg"
+ },
+ "variants": {
+  "m_slim": "m_slim.glb.json",
+  "m_avg": "m_avg.glb.json",
+  "m_strong": "m_strong.glb.json",
+  "f_slim": "f_slim.glb.json",
+  "f_avg": "f_avg.glb.json",
+  "f_strong": "f_strong.glb.json"
+ },
+ "license": "MakeHuman/MPFB assets, CC0"
+}
